@@ -4,7 +4,7 @@ An [MCP](https://modelcontextprotocol.io) server that lets an AI receptionist bo
 
 Works with Claude Desktop, Claude Code or any MCP-capable agent, and behind a WhatsApp or website chat.
 
-**▶ Live demo: https://enxo7899.github.io/bookings-mcp/** (replays agent conversations against the real booking rules in your browser)
+**▶ Live demo: https://enxo7899.github.io/bookings-mcp/** (run four agent scenarios, or open the **Tool console** and try to break the rules yourself; everything runs in your browser against the real rules)
 
 ![Agent tool calls, calendar and audit log](docs/overview.png)
 
@@ -27,6 +27,10 @@ Works with Claude Desktop, Claude Code or any MCP-capable agent, and behind a Wh
 |---|---|---|
 | ![](docs/prompt-injection.png) | ![](docs/late-cancel.png) | ![](docs/tampered-log.png) |
 
+**Try to break it yourself.** The demo's tool console calls the same tools an agent would: skip the confirmation, book on a closed day, book in 30 minutes, cancel someone else's appointment. Each attempt is refused with a reason and logged.
+
+![Tool console refusing bookings that break the rules](docs/tool-console.png)
+
 ## Tools exposed to the agent
 
 | Tool | Annotations | Purpose |
@@ -45,6 +49,8 @@ Staff actions (approve, reject, list everything, verify the log) are in `scripts
 ```bash
 npm install
 npm test                      # 16 tests: rules, privacy, approvals, audit chain, and a real MCP client round-trip
+npm run dev                   # demo page at http://127.0.0.1:5175 (?run=happy,inject replays scenarios, ?console opens the tool console)
+npm run screenshots           # with dev running: regenerates docs/*.png, fails on console errors
 TZ=Europe/Tirane npm start    # MCP server on stdio, data in data/state.json
 npm run admin -- pending      # staff: see requests waiting for approval
 npm run admin -- approve RQ-001
